@@ -3,21 +3,44 @@
   <head>
     {% block head %}
     <title>ReaderMate - {% block title %} {% endblock %}</title>
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for
+    message in messages %}
+    <div
+      class="alert alert-danger alert-dismissible fade show"
+      role="alert"
+      style="text-align: center;"
+    >
+      {{ message }}
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %} {% endif %} {% endwith %}{% endblock %}
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="shortcut icon" href="/static/favicon.ico" />
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
-    {% endblock %}
   </head>
   <body>
     <nav
-      class="navbar navbar-expand-sm navbar-dark bg-secondary justify-content-between"
+      class="navbar navbar-expand-sm navbar-light bg-light justify-content-between"
     >
       <a class="navbar-brand" href="/"
         ><img
-          src="/favicon.ico"
+          src="/static/favicon.ico"
           width="30"
           height="30"
           class="d-inline-block align-top"
@@ -38,7 +61,7 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto pt-1">
           <li class="nav-item active">
             <a class="nav-link" href="#"
               >Home <span class="sr-only">(current)</span></a
@@ -46,7 +69,10 @@
           </li>
         </ul>
         {% if not user%}
-        <ul class="navbar-nav ml-auto">
+        <ul
+          class="navbar-nav ml-auto pt-1"
+          style="margin-right: 8rem !important;"
+        >
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -62,13 +88,12 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <form class="px-4 py-3" action="/login" method="POST">
                 <div class="form-group">
-                  <label for="exampleDropdownFormEmail1">Email address</label>
+                  <label for="exampleDropdownFormEmail1">Your name</label>
                   <input
-                    type="email"
+                    type="text"
                     class="form-control"
                     id="exampleDropdownFormEmail1"
-                    placeholder="email@example.com"
-                    name="email"
+                    name="nickname"
                   />
                 </div>
                 <div class="form-group">

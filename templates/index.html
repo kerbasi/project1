@@ -1,4 +1,22 @@
 {% extends 'layout.html' %} {% block title %}Main Page{% endblock %} {% block
 body%}
-<p>Hello world!!! {% if user%} Hello, {{user}} {% endif %}</p>
+<container>
+  <div class="row justify-content-center">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-auto">
+      <form class="form-inline mx-auto" action="/search" method="POST">
+        <input
+          type="text"
+          class="form-control mb-2 mx-2"
+          placeholder="Search Books"
+          name="query"
+        />
+
+        <button type="submit" class="btn btn-primary mb-2 ml-2">Search</button>
+      </form>
+    </div>
+    <div class="col-sm-1"></div>
+  </div>
+</container>
+
 {% endblock %}

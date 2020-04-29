@@ -1,0 +1,156 @@
+{% extends 'index.html' %} {% block title %} {% endblock %} {% block body %} {{
+super() }}
+<container>
+  <div class="row">
+    <div class="col-sm mx-auto">
+      <div class="card m-auto" style="width: 80%;">
+        <div class="card-header">ISBN: {{bookData.num_isbn}}</div>
+        <div class="card-body">
+          <h5 class="card-title">{{bookData.title}}</h5>
+          <p>
+            Written by {{bookData.author}} and published in
+            {{bookData.pub_year}}.
+          </p>
+        </div>
+        <div class="card-footer text-muted">
+          <container>
+            <div class="row">
+              {% if numOfRatings != 0 %}
+              <div class="col-sm">
+                <a
+                  href=" https://www.goodreads.com/book/isbn/{{bookData.num_isbn}}"
+                  >Goodreads <br />
+                  Average rating: {{ avgRating }} <br />
+                  Number of ratings: {{ numOfRatings }}</a
+                >
+              </div>
+              {% endif %}
+              <div class="col-sm">
+                Your rating: {% if yourRate != 0 and yourRate != None %} {{
+                yourRate }} {% else %} --{% endif %}<br />
+                RM average rating: {% if RMavgRate != 0 %}{{ RMavgRate }} {%
+                else %} -- {% endif %}<br />
+                RM number of ratings: {{ RMpostsCounter }}
+              </div>
+            </div>
+          </container>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if not posted %}
+  <div class="row">
+    <div class="col-auto mx-auto mt-4">
+      <h5>Write your review of {{bookData.title}}</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <form action="/book/{{bookData.num_isbn}}" method="POST">
+        <label
+          class="form-check-label"
+          for="inlineRadio1"
+          style="margin-left: 10%;"
+          >Rate the book</label
+        >
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input ml-2"
+            type="radio"
+            value="1"
+            id="inlineRadio1"
+            name="bookRate"
+          />
+          <label class="form-check-label" for="inlineRadio1">1</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            value="2"
+            id="inlineRadio2"
+            name="bookRate"
+          />
+          <label class="form-check-label" for="inlineRadio2">2</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            value="3"
+            id="inlineRadio3"
+            name="bookRate"
+          />
+          <label class="form-check-label" for="inlineRadio3">3</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            value="4"
+            id="inlineRadio4"
+            name="bookRate"
+          />
+          <label class="form-check-label" for="inlineRadio4">4</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            value="5"
+            id="inlineRadio5"
+            name="bookRate"
+          />
+          <label class="form-check-label" for="inlineRadio5">5</label>
+        </div>
+        <div class="form-group">
+          <textarea
+            type="text"
+            class="form-control mx-auto"
+            placeholder="Your review"
+            name="review"
+            rows="4"
+            style="width: 80%;"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-left: 10%;">
+          Post
+        </button>
+      </form>
+    </div>
+  </div>
+  {% endif %}
+  <div class="row">
+    <div class="col-auto mx-auto mt-4">
+      <h5>Users reviews</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      {% for post in posts %}
+      <div class="list-group mx-auto" style="width: 80%;">
+        <div
+          class="list-group-item list-group-item-action flex-column align-items-start"
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <small class="mb-1">From {{ post.nickname }}</small>
+            <small>{{ post.time }}</small>
+          </div>
+          <p class="mb-1">{{ post.text }}</p>
+          <small
+            >Rate: {% if post.rate == None %} -- {% else %} {{ post.rate }}{%
+            endif %}</small
+          >
+        </div>
+      </div>
+      {% else %}
+      <div class="list-group mx-auto" style="width: 80%;">
+        <div class="list-group-item flex-column align-items-start">
+          <h5 class="mb-1">No reviews</h5>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</container>
+{% endblock %}

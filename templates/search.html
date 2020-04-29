@@ -1,0 +1,21 @@
+{% extends 'index.html' %} {% block title %} {% endblock %} {% block body %} {{
+super() }}
+<container>
+  <div class="row">
+    <div class="col-sm mx-auto">
+      <ul class="list-group list-group-flush">
+        {% for book in data %}
+        <li class="list-group-item m-auto">
+          <a href="/book/{{book.num_isbn}}">
+            {{book.num_isbn}} - "{{ book.title }}" by {{book.author}} published
+            {{book.pub_year}}
+          </a>
+        </li>
+        {% else %}
+        <p>No results.</p>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</container>
+{%endblock %}
