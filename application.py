@@ -6,9 +6,14 @@ from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from helpers import md5hash, registerUser, loginUser, searchBooks, getBookData, postComment, getPostsData
+from datetime import datetime
 
 
 app = Flask(__name__)
+
+@app.context_processor
+def inject_user():
+    return dict(user=session['name'])
 
 # Check for environment variable
 if not os.getenv("DATABASE_URL"):
@@ -92,7 +97,7 @@ def search():
     else:
         return render_template("search.html", data = [])
 
-@app.route('/book/<num_isbn>' ,methods=['POST','GET'])
+@app.route('/book/<num_isbn>', methods=['POST','GET'])
 def showBookInfo(num_isbn):
     if request.method == "POST":
         rate = ''
@@ -128,5 +133,10 @@ def showBookInfo(num_isbn):
                 yourRate = post.rate
         if RMpostsCounter != 0:
             RMavgRate = RMavgRate / RMpostsCounter
-        print(posts)
-        return render_template('book_info.html', bookData=bookData, posts=posts, avgRating=avgRating, numOfRatings=numOfRatings, posted=posted, yourRate=yourRate, RMavgRate=RMavgRate, RMpostsCounter=RMpostsCounter)
+        return render_template('book_info.html', bookData=bookData, posts=posts, avgRating=avgRating, 
+                                numOfRatings=numOfRatings, posted=posted, yourRate=yourRate, RMavgRate=RMavgRate, RMpostsCounter=RMpostsCounter)
+
+@app.route('/api/<num_isbn>', methods = ['POST', 'GET'])
+    if request.method == 'POST':
+        
+

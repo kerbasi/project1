@@ -38,7 +38,7 @@ super() }}
       </div>
     </div>
   </div>
-  {% if not posted %}
+  {% if not posted and user%}
   <div class="row">
     <div class="col-auto mx-auto mt-4">
       <h5>Write your review of {{bookData.title}}</h5>
@@ -134,7 +134,7 @@ super() }}
         >
           <div class="d-flex w-100 justify-content-between">
             <small class="mb-1">From {{ post.nickname }}</small>
-            <small>{{ post.time }}</small>
+            <small>{{ post.time.strftime('%Y-%m-%d') }}</small>
           </div>
           <p class="mb-1">{{ post.text }}</p>
           <small
